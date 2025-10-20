@@ -41,7 +41,6 @@ pipeline {
             set +a
 
             DOCKER_BUILDKIT=1 docker build \
-            --secret id=dotenv,src="$ENVFILE" \
             -t "$IMAGE_NAME:$TAG" .
             '''
         }
