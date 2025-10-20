@@ -19,5 +19,5 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 # COPY --from=builder /app/next.config.js ./next.config.js  # nếu app cần
-EXPOSE 3000
+EXPOSE 3001
 CMD ["npm", "start"]
