@@ -31,7 +31,7 @@ pipeline {
       steps {
         configFileProvider([
           configFile(fileId: 'deploy-env',         variable: 'DEPLOY_ENV'),
-          configFile(fileId: 'envfile-portfolio',  variable: 'ENVFILE')
+          // configFile(fileId: 'envfile-portfolio',  variable: 'ENVFILE')
         ]) {
           sh '''#!/usr/bin/env bash
             set -Eeuo pipefail
