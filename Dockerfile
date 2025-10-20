@@ -3,7 +3,7 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm i
 
 FROM node:22-alpine AS builder
 WORKDIR /app
@@ -15,7 +15,7 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm i --omit=dev
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 # COPY --from=builder /app/next.config.js ./next.config.js  # nếu app cần
