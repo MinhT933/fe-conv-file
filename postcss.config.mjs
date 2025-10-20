@@ -1,4 +1,4 @@
-const config = {
+const tconfig = {
   plugins: ["@tailwindcss/postcss"],
 };
 
