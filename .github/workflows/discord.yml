@@ -1,20 +1,20 @@
-name: Notify Discord on Push
+# name: Notify Discord on Push
 
-on:
-  push:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
 
-jobs:
-  notify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send push info to Discord
-        uses: Ilshidur/action-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: |
-            🚀 **${{ github.actor }}** pushed new code to **${{ github.repository }}**
-            🧾 Message: ${{ github.event.head_commit.message }}
-            🔗 [View Commit](${{ github.event.head_commit.url }})
-            📅 Timestamp: ${{ github.event.head_commit.timestamp }}
+# jobs:
+#   notify:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Send push info to Discord
+#         uses: Ilshidur/action-discord@master
+#         env:
+#           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#         with:
+#           args: |
+#             🚀 **${{ github.actor }}** pushed new code to **${{ github.repository }}**
+#             🧾 Message: ${{ github.event.head_commit.message }}
+#             🔗 [View Commit](${{ github.event.head_commit.url }})
+#             📅 Timestamp: ${{ github.event.head_commit.timestamp }}
