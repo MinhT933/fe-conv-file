@@ -3,19 +3,19 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 
-# Copy package files
+# Copy package files - Add cache bust for lock file changes
 COPY package*.json ./
-COPY package-lock.json* ./
+COPY package-lock.json ./
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install dependencies - Use omit for newer npm compatibility  
+RUN npm ci --omit=dev && npm cache clean --force
 
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-# Copy package files and lock file
+# Copy package files and lock file - Remove wildcard to ensure fresh copy
 COPY package*.json ./
-COPY package-lock.json* ./
+COPY package-lock.json ./
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
@@ -34,12 +34,12 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy package files
+# Copy package files - Remove wildcard to ensure fresh copy
 COPY package*.json ./
-COPY package-lock.json* ./
+COPY package-lock.json ./
 
-# Install only production dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install only production dependencies - Use omit for newer npm compatibility
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Copy built application
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
