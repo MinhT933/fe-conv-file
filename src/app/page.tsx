@@ -41,7 +41,7 @@ export default function HomePage() {
             </p>
           </section>
 
-          <section className='flex gap-6 flex-wrap'>
+          <section className='flex gap-6 flex-wrap justify-center'>
             {cardContent.map((item, index) => (
               <FileConvertCard key={index} src={item.src} title={item.title} />
             ))}
