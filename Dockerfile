@@ -2,13 +2,27 @@
 
 FROM node:22-alpine AS deps
 WORKDIR /app
+
+# Copy package files
 COPY package*.json ./
-RUN npm ci --only=production
+COPY package-lock.json* ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
 
 FROM node:22-alpine AS builder
 WORKDIR /app
+
+# Copy package files and lock file
+COPY package*.json ./
+COPY package-lock.json* ./
+
+# Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
+
+# Copy source code
 COPY . .
+
 # Build the application
 RUN npm run build
 
@@ -20,8 +34,11 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy necessary files
+# Copy package files
 COPY package*.json ./
+COPY package-lock.json* ./
+
+# Install only production dependencies
 RUN npm ci --only=production && npm cache clean --force
 
 # Copy built application
