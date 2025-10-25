@@ -1,59 +1,24 @@
-import { useState, useEffect } from "react";
-import { User } from "@/features/auth/types";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { User } from '@/features/auth/types';
 
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  setUser: (user: User) => void;
+  clearUser: () => void;
 }
 
-// Simple state management without external dependencies
-class AuthStore {
-  private state: AuthState = {
-    user: null,
-    isAuthenticated: false,
-  };
-
-  private listeners: (() => void)[] = [];
-
-  getState = () => this.state;
-
-  setUser = (user: User) => {
-    this.state = { user, isAuthenticated: true };
-    this.notify();
-  };
-
-  clearUser = () => {
-    this.state = { user: null, isAuthenticated: false };
-    this.notify();
-  };
-
-  subscribe = (listener: () => void) => {
-    this.listeners.push(listener);
-    return () => {
-      this.listeners = this.listeners.filter((l) => l !== listener);
-    };
-  };
-
-  private readonly notify = () => {
-    for (const listener of this.listeners) {
-      listener();
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      isAuthenticated: false,
+      setUser: (user: User) => set({ user, isAuthenticated: true }),
+      clearUser: () => set({ user: null, isAuthenticated: false }),
+    }),
+    {
+      name: 'auth-storage',
     }
-  };
-}
-
-export const authStore = new AuthStore();
-
-// Hook for React components
-export const useAuthStore = () => {
-  const [, forceUpdate] = useState({});
-
-  useEffect(() => {
-    return authStore.subscribe(() => forceUpdate({}));
-  }, []);
-
-  return {
-    ...authStore.getState(),
-    setUser: authStore.setUser,
-    clearUser: authStore.clearUser,
-  };
-};
+  )
+);
