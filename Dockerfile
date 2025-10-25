@@ -17,8 +17,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY package-lock.json ./
 
-# Copy dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
+# Install all dependencies including devDependencies for build
+RUN npm ci && npm cache clean --force
 
 # Copy source code
 COPY . .
