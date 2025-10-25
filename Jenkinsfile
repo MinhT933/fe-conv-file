@@ -14,6 +14,24 @@ pipeline {
   }
 
   stages {
+    stage('Start Pipeline') {
+      steps {
+        discordSend(
+          webhookURL: env.DISCORD_WEBHOOK_URL,
+          description: """
+          **Job:** ${env.JOB_NAME}
+          **Build:** #${env.BUILD_NUMBER}
+          **Branch:** ${env.BRANCH_NAME}
+          **Commit:** `${env.GIT_COMMIT_HASH}`
+          **Message:** ${env.GIT_COMMIT_MESSAGE}
+          [View Build](${env.BUILD_URL})
+          """,
+          title: "🚀 Jenkins Pipeline Started!",
+          footer: "Jenkins CI/CD | Started 🚀"
+        )
+      }
+    }
+
 
     stage('Checkout') {
       steps {
