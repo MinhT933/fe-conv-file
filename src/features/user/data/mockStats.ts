@@ -1,0 +1,92 @@
+import type { ConversionEvent, UserSession } from '../types';
+
+export const userSessions: UserSession[] = [
+  {
+    sessionId: 'sess-001',
+    userId: 'user-001',
+    startedAt: '2024-01-15T09:00:00.000Z',
+    lastActiveAt: '2024-01-15T09:42:00.000Z',
+    durationMinutes: 42,
+    isActive: true,
+    device: 'desktop',
+  },
+  {
+    sessionId: 'sess-002',
+    userId: 'user-002',
+    startedAt: '2024-01-15T10:12:00.000Z',
+    lastActiveAt: '2024-01-15T10:55:00.000Z',
+    durationMinutes: 43,
+    isActive: false,
+    device: 'mobile',
+  },
+  {
+    sessionId: 'sess-003',
+    userId: 'user-003',
+    startedAt: '2024-01-15T11:05:00.000Z',
+    lastActiveAt: '2024-01-15T11:32:00.000Z',
+    durationMinutes: 27,
+    isActive: true,
+    device: 'tablet',
+  },
+  {
+    sessionId: 'sess-004',
+    userId: 'user-001',
+    startedAt: '2024-01-15T12:10:00.000Z',
+    lastActiveAt: '2024-01-15T12:58:00.000Z',
+    durationMinutes: 48,
+    isActive: false,
+    device: 'desktop',
+  },
+  {
+    sessionId: 'sess-005',
+    userId: 'user-004',
+    startedAt: '2024-01-16T08:15:00.000Z',
+    lastActiveAt: '2024-01-16T08:59:00.000Z',
+    durationMinutes: 44,
+    isActive: true,
+    device: 'mobile',
+  },
+];
+
+export const conversionEvents: ConversionEvent[] = [
+  {
+    eventId: 'conv-001',
+    userId: 'user-001',
+    sessionId: 'sess-001',
+    revenue: 129.99,
+    timestamp: '2024-01-15T09:45:00.000Z',
+    status: 'completed',
+  },
+  {
+    eventId: 'conv-002',
+    userId: 'user-003',
+    sessionId: 'sess-003',
+    revenue: 249.5,
+    timestamp: '2024-01-15T11:35:00.000Z',
+    status: 'completed',
+  },
+  {
+    eventId: 'conv-003',
+    userId: 'user-002',
+    sessionId: 'sess-002',
+    revenue: 0,
+    timestamp: '2024-01-15T10:59:00.000Z',
+    status: 'pending',
+  },
+  {
+    eventId: 'conv-004',
+    userId: 'user-004',
+    sessionId: 'sess-005',
+    revenue: 512.75,
+    timestamp: '2024-01-16T09:02:00.000Z',
+    status: 'completed',
+  },
+  {
+    eventId: 'conv-005',
+    userId: 'user-002',
+    sessionId: 'sess-002',
+    revenue: 89.5,
+    timestamp: '2024-01-15T11:10:00.000Z',
+    status: 'refunded',
+  },
+];

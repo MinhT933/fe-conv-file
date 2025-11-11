@@ -1,7 +1,13 @@
 {
   "chat.disableAIFeatures": false, // tắt toàn bộ AI features cho workspace này
-  "github.copilot.enable": { "*": false }, // (phòng hờ) tắt đề xuất code
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false,
+    "typescript": true
+  }, // (phòng hờ) tắt đề xuất code
   "github.copilot.editor.enableCodeActions": false,
-  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.nextEditSuggestions.enabled": true,
   "editor.inlineSuggest.edits.allowCodeShifting": "never"
 }
