@@ -46,6 +46,33 @@ export const userSessions: UserSession[] = [
     isActive: true,
     device: 'mobile',
   },
+  {
+    sessionId: 'sess-006',
+    userId: 'user-003',
+    startedAt: '2024-01-16T10:00:00.000Z',
+    lastActiveAt: '2024-01-16T11:52:00.000Z',
+    durationMinutes: 112,
+    isActive: true,
+    device: 'desktop',
+  },
+  {  
+    sessionId: 'sess-007',
+    userId: 'user-002',
+    startedAt: '2024-01-16T13:00:00.000Z',
+    lastActiveAt: '2024-01-16T13:08.000Z',
+    durationMinutes: 8,
+    isActive: false,
+    device: 'mobile',
+},
+{
+    sessionId: 'sess-008',
+    userId: 'user-001',
+    startedAt: '2024-01-16T15:30:00.000Z',
+    lastActiveAt: '2024-01-16T15:33:00.000Z',
+    durationMinutes: 3,
+    isActive: false,
+    device: 'tablet',
+},
 ];
 
 export const conversionEvents: ConversionEvent[] = [
@@ -56,6 +83,7 @@ export const conversionEvents: ConversionEvent[] = [
     revenue: 129.99,
     timestamp: '2024-01-15T09:45:00.000Z',
     status: 'completed',
+    action: 'add_to_cart',
   },
   {
     eventId: 'conv-002',
@@ -64,6 +92,7 @@ export const conversionEvents: ConversionEvent[] = [
     revenue: 249.5,
     timestamp: '2024-01-15T11:35:00.000Z',
     status: 'completed',
+    action: 'start_trial'
   },
   {
     eventId: 'conv-003',
@@ -72,6 +101,7 @@ export const conversionEvents: ConversionEvent[] = [
     revenue: 0,
     timestamp: '2024-01-15T10:59:00.000Z',
     status: 'pending',
+    action: 'renew_subscription'
   },
   {
     eventId: 'conv-004',
@@ -80,6 +110,7 @@ export const conversionEvents: ConversionEvent[] = [
     revenue: 512.75,
     timestamp: '2024-01-16T09:02:00.000Z',
     status: 'completed',
+    action: 'add_to_cart',
   },
   {
     eventId: 'conv-005',
@@ -88,5 +119,6 @@ export const conversionEvents: ConversionEvent[] = [
     revenue: 89.5,
     timestamp: '2024-01-15T11:10:00.000Z',
     status: 'refunded',
+    action: 'add_to_cart'
   },
 ];

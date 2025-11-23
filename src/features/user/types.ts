@@ -36,6 +36,7 @@ export interface UserSession {
 }
 
 export type ConversionStatus = 'completed' | 'pending' | 'refunded';
+export type ConversionAction = 'add_to_cart'| 'start_trial' | 'renew_subscription';
 
 export interface ConversionEvent {
   eventId: string;
@@ -44,6 +45,7 @@ export interface ConversionEvent {
   revenue: number;
   timestamp: string;
   status: ConversionStatus;
+  action: ConversionAction;
 }
 
 export interface DashboardMetricsSummary {
@@ -51,4 +53,5 @@ export interface DashboardMetricsSummary {
   activeSessions: number;
   averageRevenue: number;
   conversionRate: number;
+  averageSessionDuration?: number;
 }
