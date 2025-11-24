@@ -1,48 +1,78 @@
-# Bài Tập Thực Tập: Phân Tích Mock Data Dashboard
+# Bài Tập Thực Tập: Phân Tích Mock Data Dashboard (Tập trung UI + thao tác mảng nâng cao)
 
-## Bối cảnh
+## Mục tiêu (tập trung UI + thao tác mảng thực tế)
 
-Nhóm sản phẩm đang thử nghiệm một dashboard phân tích người dùng. Các file mock data và dịch vụ thống kê đã được chuẩn bị sẵn trong codebase để mô phỏng dữ liệu sản phẩm thực tế:
+Mục tiêu của bài tập được nâng cấp để rèn luyện sâu về thao tác mảng JavaScript (map, filter, reduce, find, some, every, includes, sort, slice, concat, flat, flatMap, v.v.) trong ngữ cảnh dashboard thực tế. Học viên phải sử dụng ít nhất 10 hàm mảng khác nhau, kết hợp với UI tương tác để hiển thị kết quả động, tối ưu hiệu năng, và xử lý edge cases.
 
-- `src/features/user/data/mockStats.ts`: chứa danh sách phiên người dùng (`userSessions`) và danh sách sự kiện chuyển đổi (`conversionEvents`).
-- `src/features/user/services/stats.service.ts`: cung cấp hàm thuần `summarizeDashboardMetrics` dùng `map`, `filter`, `reduce` để tổng hợp dữ liệu dashboard.
+## Yêu cầu chính (UI + thao tác mảng nâng cao)
 
-## Mục tiêu học tập
+1. Mở rộng mock data thực tế
+   - Thêm ít nhất 5 users, 20+ sessions, 50+ events vào `src/features/user/data/mockStats.ts`.
+   - Bao gồm nested data (ví dụ: events trong sessions), và dữ liệu đa dạng (dates, revenues, types).
 
-1. Hiểu cấu trúc dữ liệu người dùng và sự kiện chuyển đổi.
-2. Vận dụng các thao tác mảng nâng cao (map/filter/reduce) để tính toán thống kê.
-3. Viết unit test bao phủ nhiều trường hợp dữ liệu khác nhau.
-4. Trình bày kết quả trực quan và có định dạng rõ ràng trên giao diện dashboard.
+2. Tạo component UI dùng đa dạng thao tác mảng
+   - **SessionList**: Sử dụng `map` để render danh sách sessions; `filter` theo trạng thái; `sort` theo thời gian/revenue; `slice` cho phân trang; `find` để highlight session cụ thể.
+   - **ConversionSummary**: Dùng `reduce` để tính tổng hợp (totalEvents, totalRevenue, avgEventsPerUser, conversionRate); `some`/`every` để phân loại users; `flatMap` nếu có nested events; `includes` để kiểm tra event types.
+   - **InteractiveFilters**: Cho phép tìm kiếm (`find`/`filter`), sort (`sort`), phân trang (`slice`), merge filters (`concat`); sử dụng `flat` nếu cần flatten data.
+   - **UserSegmentation**: Phân loại users thành segments (active, passive, trial-only) dùng `filter`/`some`/`every`; hiển thị charts với `map`/`reduce`.
+   - **EventTimeline**: Sử dụng `sort` để timeline; `findIndex` để vị trí events; `concat` để merge timelines từ nhiều users.
 
-## Yêu cầu bài tập
+3. Code yêu cầu cho thao tác mảng (ít nhất 10 hàm khác nhau)
+   - `map`: Transform data (e.g., format dates, calculate derived fields).
+   - `filter`: Lọc theo criteria (date range, event type, user status).
+   - `reduce`: Gom thống kê (totals, averages, maps).
+   - `find`/`findIndex`: Tìm item cụ thể hoặc vị trí.
+   - `some`/`every`: Kiểm tra conditions cho segments.
+   - `includes`: Membership checks (e.g., event types).
+   - `sort`: Sắp xếp theo multiple criteria.
+   - `slice`: Phân trang, giới hạn results.
+   - `concat`: Merge arrays (e.g., combine filters).
+   - `flat`/`flatMap`: Handle nested structures.
+   - Tất cả phải bất biến (immutable), không mutate nguồn.
 
-1. **Mở rộng mock data**
-   - Thêm ít nhất 3 người dùng mới vào `userSessions` với các pattern hành vi khác nhau (ví dụ: hoạt động dày đặc, thưa thớt, chỉ xem thử).
-   - Bổ sung các sự kiện trong `conversionEvents` để bao phủ thêm nhiều bước trong funnel (thêm hành động như `add_to_cart`, `start_trial`, `renew_subscription`).
-   - Đảm bảo mỗi phần tử đều tuân thủ kiểu đã khai báo trong `src/features/user/types.ts`.
+4. Hiệu năng & React nâng cao
+   - Dùng `useMemo` cho tất cả calculations; `useCallback` cho event handlers.
+   - Implement virtualization cho lists lớn (e.g., 100+ items) dùng `slice` và lazy loading.
+   - Debounce search inputs để tránh re-calculations liên tục.
 
-2. **Phát triển hàm tổng hợp**
-   - Bổ sung thêm một thống kê mới vào `summarizeDashboardMetrics`, ví dụ: tỉ lệ giữ chân (retention rate) hoặc số lượt chuyển đổi trên mỗi người dùng.
-   - Sử dụng thuần các phương thức mảng để tính toán, không sử dụng thư viện bên ngoài.
-   - Viết tài liệu ngắn gọn trong phần comment giải thích các bước chính của thuật toán.
+5. Test & chấp nhận
+   - Unit tests cho tất cả hàm xử lý mảng (normal, edge cases: empty arrays, large data).
+   - Integration tests cho components với @testing-library/react (simulate filters, pagination).
+   - Chạy `npm run test` phải pass; thêm performance tests nếu cần.
 
-3. **Viết unit test**
-   - Cập nhật `src/features/user/services/__tests__/stats.service.test.ts` để kiểm tra thống kê mới với các bộ dữ liệu: dữ liệu bình thường, dữ liệu trống, dữ liệu có giá trị bất thường (ví dụ: doanh thu cực lớn hoặc timestamp rỗng).
-   - Dùng `vitest` và ưu tiên tách các test case bằng `describe` rõ ràng.
+## Bài tập phân nhỏ (task list nâng cao)
 
-4. **Hiển thị trên UI**
-   - Cập nhật `src/app/(dashboard)/page.tsx` (hoặc component con nếu cần) để render thống kê mới.
-   - Đảm bảo các giá trị được định dạng thân thiện (ví dụ: dùng Intl.NumberFormat cho tiền tệ, phần trăm).
+- [ ] Đọc `src/features/user/types.ts` và mock data hiện tại.
+- [ ] Chạy `npm run dev`, explore dashboard.
+- [ ] Mở rộng mock data: 5+ users, nested sessions/events, đa dạng types.
+- [ ] Viết `ConversionSummary`: Dùng `reduce`/`flatMap`/`some` để tính metrics; memoize.
+- [ ] Viết `SessionList`: `map`/`filter`/`sort`/`slice` cho list với pagination; `find` để search.
+- [ ] Viết `InteractiveFilters`: `concat` filters; `includes` cho multi-select; debounce.
+- [ ] Viết `UserSegmentation`: `filter`/`some`/`every` cho segments; `map` để render.
+- [ ] Viết `EventTimeline`: `sort`/`findIndex`/`concat` cho timeline view.
+- [ ] Định dạng số với Intl; thêm charts (e.g., dùng `reduce` cho data points).
+- [ ] Viết tests: Cover 10+ hàm mảng, edge cases (empty, large data).
+- [ ] Ghi report: Chiến lược mock data, thuật toán (với code snippets), screenshots, performance notes.
 
-## Yêu cầu báo cáo
+## Tips kỹ thuật nâng cao
 
-- Mô tả ngắn gọn chiến lược mở rộng mock data và lý do chọn các pattern hành vi.
-- Đính kèm screenshot dashboard sau khi bổ sung thống kê mới.
-- Nêu rõ các trường hợp test đã bao phủ và các edge case quan trọng.
+- Pure functions: Input -> output, no side effects.
+- Chain operations: arr.filter(...).map(...).reduce(...) để tối ưu.
+- For large data: Use `slice` early to limit processing.
+- Nested data: `flatMap` to flatten before processing.
+- Performance: Memoize expensive chains; avoid re-renders with keys.
 
-## Gợi ý đánh giá
+## Tiêu chí chấm nâng cao
 
-- Điểm tối đa khi thực tập sinh triển khai đủ yêu cầu, viết code sạch, có comment rõ ràng và test chạy thành công.
-- Điểm cộng nếu xây dựng thêm biểu đồ, bảng chi tiết hoặc insight phụ trợ.
+- Completeness: Sử dụng ít nhất 10 hàm mảng, UI tương tác đầy đủ.
+- Correctness: Metrics chính xác, immutable operations.
+- Code quality: Clean, commented, efficient.
+- UI: Responsive, intuitive, handles large data.
+- Tests: Comprehensive, including performance.
 
-Chúc bạn hoàn thành bài tập và hiểu sâu hơn về cách làm việc với mock data trong dự án!
+Chỉ dẫn chạy nhanh:
+
+- Phát triển: npm run dev
+- Chạy test: npm run test
+
+Chúc học trò wow với bài tập thực tế này — tập trung vào đa dạng hàm mảng và UI động!
