@@ -33,9 +33,12 @@ export interface UserSession {
   durationMinutes: number;
   isActive: boolean;
   device: SessionDeviceType;
+  events?: ConversionEvent[];
+
 }
 
 export type ConversionStatus = 'completed' | 'pending' | 'refunded';
+export type ConversionAction = 'add_to_cart'| 'start_trial' | 'renew_subscription' | 'upgrade_plan' |'downgrade_plan';
 
 export interface ConversionEvent {
   eventId: string;
@@ -44,6 +47,7 @@ export interface ConversionEvent {
   revenue: number;
   timestamp: string;
   status: ConversionStatus;
+  action: ConversionAction;
 }
 
 export interface DashboardMetricsSummary {
@@ -51,4 +55,5 @@ export interface DashboardMetricsSummary {
   activeSessions: number;
   averageRevenue: number;
   conversionRate: number;
+  averageSessionDuration?: number;
 }

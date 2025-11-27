@@ -33,6 +33,17 @@ export default function DashboardPage() {
             <MetricValue value={summary.conversionRate} format='percentage' />
           </p>
         </div>
+        <div className='p-6 border rounded-lg'>
+          <h3 className='text-lg font-semibold mb-2'>
+            Avarage Duaration Session
+          </h3>
+          <p className='text-3xl font-bold text-orange-600'>
+            <MetricValue
+              value={summary.averageSessionDuration ?? 0}
+              format='number'
+            />
+          </p>
+        </div>
       </div>
     </div>
   );

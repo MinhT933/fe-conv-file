@@ -83,10 +83,20 @@ export const summarizeDashboardMetrics = (
   const conversionRate =
     validSessions.length > 0 ? revenueTotals.count / validSessions.length : 0;
 
+    // count average session duration
+    // plus all durations, go through valid sessions, if durationMinutes is number, add to total
+    const totalDuration = validSessions.reduce(
+    (sum, s) => sum + (typeof s.durationMinutes === 'number' ? s.durationMinutes : 0),
+    0
+  );
+    // devide by number of valid sessions
+    // check if validSessions length > 0 to avoid division by zero
+    const averageSessionDuration = validSessions.length > 0 ? totalDuration / validSessions.length : 0;
   return {
     totalUsers: uniqueUsers.length,
     activeSessions,
     averageRevenue,
     conversionRate,
+    averageSessionDuration
   };
 };
